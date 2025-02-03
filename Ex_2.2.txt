@@ -1,0 +1,45 @@
+
+; A = "attend the match"
+; T = "possess a ticket"
+; R = "make a reservation"
+; p = "Peter"
+
+; (Ax) (A(x) -> T(x))
+; (Ax) (T(x) -> R(x))
+; -------------------
+; ~R(p) -> ~A(p)
+; the thesis is negated as 
+; ~(~R(p) -> ~A(p))
+
+; After skolemization
+; (Ax) (~A(x) V T(x))
+; (Ax) (~T(x) V R(x))
+; ~R(p) & A(p)
+
+; After instantiation
+; 1) ~A(p) V T(p)
+; 2) ~T(p) V R(p)
+; 3) ~R(p)
+; 4) A(p)
+; 
+; Resolution  2)-3) gives ~T(p); this is resolved with 1) giving ~A(p)
+; A final resolution with 4) gives the empty clause.
+; UNSAT --> so the inference is correct.
+
+
+(declare-sort D)
+(declare-fun A (D) Bool)
+(declare-fun T (D) Bool)
+(declare-fun R (D) Bool)
+(declare-const p D)
+(assert (forall ((x D)) (=> (A x) (T x))))
+(assert (forall ((x D)) (=> (T x) (R x))))
+(assert (not (=> (not (R p)) (not (A p)))))
+(check-sat)
+
+
+
+
+
+
+

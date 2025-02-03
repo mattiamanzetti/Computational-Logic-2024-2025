@@ -1,0 +1,48 @@
+
+;1) ~f(g(x),y)=z
+;2) g(x)=y \/ g(y)=y   
+;3) f(y,y)=z
+;4) g(x)=g(y)
+
+; Propagate (three times)
+; < ~f(g(x),y)=z[1], f(y,y)=z[3], g(x)=g(y)[4]   | 1-4 | * >
+; 
+; ~f(g(x),y)=z & f(y,y)=z[3] & g(x)=g(y) & g(x)=y is inconsistent
+; because [let g(x)=a, g(y)=b for flattening] of the following CC steps:
+; {f(y,y),z} {g(x),g(y),a,b,y} {f(a,y)} {x}
+; we merge 1st 1nd 3rd blocks because a=y & y=y -> f(y,y)=f(a,y)
+; {f(y,y),z,f(a,y)} {g(x),g(y),a,b,y} {x}
+; this is inconsistent with ~f(a,y)=z coming from flattening of ~f(g(x),y)=z
+; We learn
+; 5) ; f(g(x),y)=z \/ ~f(y,y)=z \/ ~g(x)=g(y) \/ ~g(x)=y 
+; T-propagate ~g(x)=y :
+; < ~f(g(x),y)=z[1], f(y,y)=z[3], g(x)=g(y)[4], ~g(x)=y[5]  | 1-5 | * >
+; Propagate
+; < ~f(g(x),y)=z[1], f(y,y)=z[3], g(x)=g(y)[4], ~g(x)=y[5], g(y)=y[2]  | 1-5 | * >
+
+; We go to T-conflict because 
+; g(x)=g(y) & ~g(x)=y & g(y)=y
+; is EUF-inconsistent
+; because [let g(x)=a for flattening] the initial blocks
+; {g(x),a,g(y),y} {x}
+; are inconsistent with ~g(x)=y (no merging is needed).
+
+; Exit with UNSAT  because we are in conflict without decided literals. 
+
+(declare-sort D)
+(declare-const x D)
+(declare-const y D)
+(declare-const z D)
+(declare-fun f (D D) D)
+(declare-fun g (D) D)
+
+(assert (not (= (f (g x) y) z)))
+(assert (or (= (g x) y) (= (g y) y)))
+(assert (= (f y y) z))
+(assert (= (g x) (g y)))
+
+
+(check-sat)
+
+
+

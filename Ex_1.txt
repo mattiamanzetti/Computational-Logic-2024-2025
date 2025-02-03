@@ -1,0 +1,10 @@
+
+1.1 ~P(a), ~P(f(b)), etc.  are ground negative literals, whereas ~P(x), ~P(f(x)), etc.  are non ground negative literals.
+1.2 The first two formulae are sentences, the third is not because it has a free occurrence of the variable y.
+
+2. A(x) (P(g(x)) \wedge f(g(x))=x \wedge \neg f(h(x))=x) .
+(here g,h are unary Skolem functions).
+
+3. The second and the fourth literals are flat.
+
+4. See the course notes.

@@ -1,0 +1,10 @@
+
+~(p->q) \/ ~(q->~s) \/ (s->p)
+
+
+(p&~q) \/ (q&s) \/ ~s \/ p
+
+(p \/ q \/ ~s \/ p) & (p \/ s \/ ~s \/ p) & (~q \/ q \/ ~s \/ p) & (~q \/ s \/ ~s \/ p)
+
+It can be simplified if you like to
+p \/ q \/ ~s 
